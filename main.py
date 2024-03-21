@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
-# from cron.ve import save_data_in_db
+from cron.ve import save_data_in_db
 from db.currency import get_currencies, get_currency
 
 app = FastAPI()
 
-# save_data_in_db()
+save_data_in_db()
 
 
 @app.get("/")
