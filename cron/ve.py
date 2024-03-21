@@ -8,8 +8,6 @@ def save_data_in_db():
 
 	for currency in bcv_data:
 		insert_currency(currency, bcv_data[currency], "bcv", "ve")
-		print(currency, bcv_data[currency], bcv_data)
 
 	for currency in paralelo_data:
-		print(currency, paralelo_data[currency], paralelo_data)
 		insert_currency(currency, paralelo_data[currency], "paralelo", "ve")
