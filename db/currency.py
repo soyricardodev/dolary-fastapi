@@ -46,28 +46,11 @@ def get_currency(name: str, origin: str, country: str):
 	currency = cur.fetchone()
 	cols = [column[0] for column in cur.description]
 	results = dict(zip(cols, currency))
+
 	if currency:
 		return Currency(**results)
 	else:
 		return None
-
-	# columnas = [column[0] for column in cur.description]
-	# results = dict(zip(columnas, currency))
-
-	# Convertir el diccionario a un objeto Currency
-	# return Currency(**results)
-	# if currency:
-	# 	results = Currency(
-	# 		id=currency[0],
-	# 		name=currency[1],
-	# 		origin=currency[2],
-	# 		country=currency[3],
-	# 		value=currency[4],
-	# 		updated_at=currency[5],
-	# 	)
-	# 	return results
-	# else:
-	# 	return None
 
 
 def get_currencies():
@@ -79,8 +62,3 @@ def get_currencies():
 	results = [dict(zip(cols, currency)) for currency in currencies]
 
 	return [Currency(**result) for result in results]
-
-	# columnas = [column[0] for column in cur.description]
-	# results = [dict(zip(columnas, currency)) for currency in currencies]
-
-	# return [Currency(**result) for result in results]
