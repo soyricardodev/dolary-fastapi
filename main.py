@@ -1,23 +1,21 @@
 from fastapi import FastAPI
 
-from cron.ve import save_data_in_db
-from db.currency import get_currencies, get_currency
+from db.currency import (
+	get_currencies_latest_value_by_name,
+	get_currency_latest_value_by_origin,
+)
 
 app = FastAPI()
 
-save_data_in_db()
+
+# @app.get("/")
+# async def root():
+# 	return get_currencies_latest_values()
 
 
-@app.get("/")
-async def root():
-	return get_currencies()
-
-
-@app.get("/bcv")
-async def bcv():
-	return get_currency("usd", "bcv", "ve")
-
-
-@app.get("/paralelo")
-async def paralelo():
-	return get_currency("usd", "paralelo", "ve")
+@app.get("/api/currency/{currency}")
+async def get_currency(currency: str, origin: str | None = None):
+	if origin:
+		return get_currency_latest_value_by_origin(currency, origin)
+	else:
+		return get_currencies_latest_value_by_name(currency)

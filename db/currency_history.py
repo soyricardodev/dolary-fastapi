@@ -1,53 +1,23 @@
 from db.conn import cur
 
 
-def insert_currency_history(name: str, value: float):
+def insert_currency_history(currency_id: int, value: float, date: float):
 	cur.execute(
 		"""
-		INSERT INTO currency_history (name, value)
-		VALUES (?, ?)
-	""",
-		(name, value),
+			INSERT INTO currency_history (currency_id, value, date)
+			VALUES (?, ?, ?);
+		""",
+		(currency_id, value, date),
 	)
 	cur.execute("COMMIT")
 
 
-def update_currency_history(name: str, value: float):
-	cur.execute(
-		"""
-		UPDATE currency_history
-		SET value = ?
-		WHERE name = ?
-	""",
-		(value, name),
-	)
-	cur.execute("COMMIT")
-
-
-def get_currency_history(name: str):
+def get_currency_history(currency_id: int):
 	cur.execute(
 		"""
 		SELECT * FROM currency_history
-		WHERE name = ?
+		WHERE currency_id = ?
 	""",
-		(name,),
+		(currency_id,),
 	)
-	return cur.fetchone()
-
-
-def get_currency_histories():
-	cur.execute("""
-		SELECT * FROM currency_history
-	""")
 	return cur.fetchall()
-
-
-def get_currency_history_by_date(name: str, date: str):
-	cur.execute(
-		"""
-		SELECT * FROM currency_history
-		WHERE name = ? AND date = ?
-	""",
-		(name, date),
-	)
-	return cur.fetchone()
